@@ -1,4 +1,21 @@
 {{- /* Head custom content area start */ -}}
 {{- /*     Insert any custom code (web-analytics, resources, etc.) - it will appear in the <head></head> section of every page. */ -}}
 {{- /*     Can be overwritten by partial with the same name in the global layouts. */ -}}
+
+{{- $codeFontCDN := site.Params.codeFontCDN | default "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" -}}
+{{- $codeFontFamily := site.Params.codeFontFamily | default "JetBrains Mono" -}}
+
+{{- if $codeFontCDN }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ $codeFontCDN }}">
+{{- end }}
+
+<style>
+    :root {
+        --code-font-family: '{{ $codeFontFamily }}', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+</style>
+
 {{- /* Head custom content area end */ -}}
+

@@ -1,0 +1,53 @@
+.post-content pre,
+.post-content .highlight,
+.post-content div.highlight {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.post-content .highlight {
+    position: relative;
+    overflow: hidden;
+}
+
+.post-content .highlight pre {
+    margin: 0;
+    padding-top: 2.2rem;
+}
+
+.post-content pre code,
+.post-content .highlight code,
+.post-content code {
+    font-family: var(--code-font-family);
+}
+
+.post-content .highlight::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 0.5rem;
+    left: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    pointer-events: none;
+}
+
+.post-content .highlight:not([data-lang])::before,
+.post-content .highlight[data-lang=""]::before {
+    content: "CODE";
+}
+
+.post-content .highlight .copy-code {
+    top: 0.45rem;
+    right: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--theme) 82%, transparent);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.post-content .highlight .copy-code:hover {
+    border-color: var(--tertiary);
+}

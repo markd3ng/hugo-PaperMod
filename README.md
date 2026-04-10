@@ -53,7 +53,21 @@
 
 Read Wiki For More Details => **[PaperMod - Features](https://github.com/adityatelange/hugo-PaperMod/wiki/Features)**
 
+### Code Font CDN Override (for distributed theme usage)
+
+PaperMod provides a default code font CDN and allows any site to override it in its own `config.yml`.
+
+```yaml
+params:
+  codeFontCDN: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+  codeFontFamily: "JetBrains Mono"
+```
+
+- `codeFontCDN`: optional; when omitted, theme default CDN is used.
+- `codeFontFamily`: optional; controls code font stack via CSS variable.
+
 ---
+
 
 ## Install/Update 📥
 

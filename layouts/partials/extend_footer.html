@@ -1,3 +1,13 @@
 {{- /* Footer custom content area start */ -}}
 {{- /*     Insert any custom code web-analytics, resources, etc. here */ -}}
+
+{{- $codeEnhance := resources.Get "js/code-render-enhance.js" | resources.Minify -}}
+{{- if not site.Params.assets.disableFingerprinting }}
+{{- $codeEnhance = $codeEnhance | fingerprint -}}
+<script defer crossorigin="anonymous" src="{{ $codeEnhance.RelPermalink }}" integrity="{{ $codeEnhance.Data.Integrity }}"></script>
+{{- else }}
+<script defer crossorigin="anonymous" src="{{ $codeEnhance.RelPermalink }}"></script>
+{{- end }}
+
 {{- /* Footer custom content area end */ -}}
+
