@@ -261,20 +261,46 @@
 }
 
 .toc {
-    margin-bottom: var(--content-gap);
+    margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
     background: var(--code-bg);
     border-radius: var(--radius);
-    padding: 0.4em;
+    padding: 0.4em 0;
 }
 
 [data-theme="dark"] .toc {
     background: var(--entry);
 }
 
+/* TocSide - Sidebar TOC support */
+.toc.side {
+    font-size: .8em;
+}
+
+@media screen and (min-width: 1350px) {
+    .toc.side {
+        position: fixed;
+        top: 118px;
+        z-index: 1;
+        max-height: calc(100% - 150px);
+        overflow: auto;
+    }
+    .toc.side::-webkit-scrollbar-thumb {
+        border: 5px solid var(--code-bg);
+    }
+    .toc.side.left {
+        left: 15px;
+        width: 250px;
+    }
+    .toc.side.right {
+        right: 15px;
+        width: 265px;
+    }
+}
+
 .toc details summary {
-    cursor: zoom-in;
-    margin-inline-start: 10px;
+    cursor: pointer;
+    margin-inline-start: 15px;
     user-select: none;
 }
 
@@ -288,13 +314,30 @@
 }
 
 .toc .inner {
-    margin: 5px 20px;
-    padding: 0 10px;
-    opacity: 0.9;
+    padding: 10px 15px 5px 35px;
+}
+
+.toc ul {
+    margin: 0;
+    padding: 0;
 }
 
 .toc li ul {
-    margin-inline-start: var(--gap);
+    margin-inline-start: 20px;
+}
+
+.toc li a {
+    line-height: 1.5em;
+    padding: 3px 5px;
+    border-radius: 5px;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+/* Active link highlighting for scroll spy */
+.toc li a.active {
+    background-color: var(--link-background-color);
+    font-weight: 500;
 }
 
 .toc summary:focus {
