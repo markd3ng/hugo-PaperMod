@@ -138,6 +138,7 @@ params:
   ShowAllPagesInArchive: true
   ShowPageNums: true
   ShowToc: true
+  TocSide: "left"  # Sidebar TOC: "left" or "right", requires screen width >= 1350px
   # comments: false
   images: ["images/papermod-cover.png"]
 
