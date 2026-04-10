@@ -194,8 +194,12 @@ params:
   #     google:
   #         SiteVerificationTag: "XYZabc"
 
+  codeFontCDN: "https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+  codeFontFamily: "JetBrains Mono"
+
   assets:
     disableHLJS: true
+
   #     favicon: "<link / abs url>"
   #     favicon16x16: "<link / abs url>"
   #     favicon32x32: "<link / abs url>"
