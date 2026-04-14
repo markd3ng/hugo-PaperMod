@@ -167,6 +167,11 @@ ShowRssButtonInSectionTermList = true
 ShowAllPagesInArchive = true
 ShowPageNums = true
 ShowToc = true
+# Enable native TOC relocation into a sidebar container on single pages.
+ShowSidebarTOC = true
+# Sidebar side for native TOC: "left" or "right".
+TocSide = "right"
+# TocOpen (native option) still controls the initial expanded state.
 mainSections = ["posts", "papermod"]
 author = "Theme PaperMod"
 # Canonical SEO keys expected by templates

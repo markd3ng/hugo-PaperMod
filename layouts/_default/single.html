@@ -1,5 +1,14 @@
 {{- define "main" }}
 
+{{- $showSidebarTOC := and (.Param "ShowToc") (.Param "ShowSidebarTOC") }}
+{{- $tocSide := lower ((.Param "TocSide") | default "right") }}
+<div class="post-layout{{ if $showSidebarTOC }} has-sidebar toc-side-{{ if eq $tocSide "left" }}left{{ else }}right{{ end }}{{ end }}">
+  {{- if $showSidebarTOC }}
+  <aside class="toc-sidebar toc-sidebar-desktop">
+    {{- partial "toc.html" . }}
+  </aside>
+  {{- end }}
+
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
@@ -30,8 +39,12 @@
   </header>
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
-  {{- if (.Param "ShowToc") }}
+  {{- if and (.Param "ShowToc") (not $showSidebarTOC) }}
   {{- partial "toc.html" . }}
+  {{- else if $showSidebarTOC }}
+  <div class="toc-inline-mobile">
+    {{- partial "toc.html" . }}
+  </div>
   {{- end }}
 
   {{- if .Content }}
@@ -61,5 +74,6 @@
   {{- partial "comments.html" . }}
   {{- end }}
 </article>
+</div>
 
 {{- end }}{{/* end main */}}

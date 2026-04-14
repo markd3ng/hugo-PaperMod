@@ -96,4 +96,25 @@ This section tracks intentional deviations from upstream `adityatelange/hugo-Pap
 - CDN strategy supports `google`, `jsdelivr`, and `custom` providers with graceful local font fallback.
 - To disable Vivia typography and use default PaperMod code appearance, set `codeStyleVivia = false` in site params.
 
+### Native TOC Sidebar (Minimal Relocation)
+
+PaperMod now supports relocating the native TOC container to a sticky sidebar on single pages, while reusing the existing `layouts/partials/toc.html` logic and keeping native TOC styling unchanged.
+
+Example params:
+
+```toml
+[params]
+ShowToc = true
+ShowSidebarTOC = true
+TocSide = "right" # "left" or "right"
+# TocOpen remains the native control for the initial expanded/collapsed state.
+```
+
+Behavior notes:
+- Desktop: TOC renders in a sticky sidebar (`top: var(--header-height)`).
+- Small screens (`<1218px`): TOC falls back above the post content to avoid obstructing reading.
+- If `ShowSidebarTOC` is disabled, TOC keeps the original in-flow position.
+
+
+
 
