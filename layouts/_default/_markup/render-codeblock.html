@@ -1,0 +1,7 @@
+{{- $result := transform.HighlightCodeBlock . -}}
+<figure class="codeblock-vivia{{ with .Type }} language-{{ . }}{{ end }}">
+  {{- with .Type }}
+  <figcaption class="code-lang-label">{{ . }}</figcaption>
+  {{- end }}
+  {{- $result.Wrapped | safeHTML -}}
+</figure>

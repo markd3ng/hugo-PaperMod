@@ -13,3 +13,5 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Grouped configuration for SEO, Search, Social, and Analytics with English comments.
 - Replaced legacy analytics partial usage with Hugo internal analytics template.
 - Added repository-level customization tracking section in `README.md`.
+- feat(ui): port Vivia code rendering and typography.
+

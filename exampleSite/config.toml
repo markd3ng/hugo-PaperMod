@@ -174,6 +174,15 @@ env = "production"
 description = "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
 images = ["images/papermod-cover.png"]
 
+# Vivia-style code typography (font stack + optional webfont CDN)
+codeStyleVivia = true
+codeFontFamily = '"JetBrains Mono", "Source Code Pro", Consolas, Monaco, Menlo, monospace'
+codeFontSource = "jsdelivr"   # none | google | jsdelivr | custom
+codeFontPreconnect = true
+codeFontGoogleFamily = "JetBrains+Mono:wght@400;500;700"
+codeFontJsdelivrCSS = "https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.6/index.min.css"
+codeFontCDN = ""              # used when codeFontSource = "custom"
+
 # SEO
 [params.seo]
 env = "production"

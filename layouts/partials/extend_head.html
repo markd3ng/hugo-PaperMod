@@ -1,4 +1,51 @@
 {{- /* Head custom content area start */ -}}
 {{- /*     Insert any custom code (web-analytics, resources, etc.) - it will appear in the <head></head> section of every page. */ -}}
 {{- /*     Can be overwritten by partial with the same name in the global layouts. */ -}}
+
+{{- $viviaEnabled := site.Params.codeStyleVivia | default false -}}
+{{- if $viviaEnabled -}}
+  <script>document.documentElement.classList.add('code-style-vivia');</script>
+
+  {{- $codeFontFamily := site.Params.codeFontFamily | default "\"JetBrains Mono\", \"Source Code Pro\", Consolas, Monaco, Menlo, monospace" -}}
+  <style>
+    :root {
+      --pm-code-font-family: {{ $codeFontFamily | safeCSS }};
+      --pm-code-line-height: 1.6;
+      --pm-code-letter-spacing: normal;
+      --pm-code-tab-size: 4;
+      --pm-ui-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+  </style>
+
+  {{- $source := lower (site.Params.codeFontSource | default "none") -}}
+  {{- $preconnect := site.Params.codeFontPreconnect | default true -}}
+
+  {{- if eq $source "google" -}}
+    {{- if $preconnect -}}
+      <link rel="dns-prefetch" href="//fonts.googleapis.com">
+      <link rel="dns-prefetch" href="//fonts.gstatic.com">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    {{- end -}}
+    {{- $googleFamily := site.Params.codeFontGoogleFamily | default "JetBrains+Mono:wght@400;500;700" -}}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ $googleFamily }}&display=swap">
+  {{- else if eq $source "jsdelivr" -}}
+    {{- if $preconnect -}}
+      <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+      <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    {{- end -}}
+    {{- $jsdelivrCSS := site.Params.codeFontJsdelivrCSS | default "https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5.2.6/index.min.css" -}}
+    <link rel="stylesheet" href="{{ $jsdelivrCSS | safeURL }}">
+  {{- else if and (eq $source "custom") site.Params.codeFontCDN -}}
+    {{- $customURL := site.Params.codeFontCDN -}}
+    {{- $customParsed := urls.Parse $customURL -}}
+    {{- if and $preconnect $customParsed.IsAbs $customParsed.Host -}}
+      {{- $customHost := printf "%s://%s" $customParsed.Scheme $customParsed.Host -}}
+      <link rel="dns-prefetch" href="//{{ $customParsed.Host }}">
+      <link rel="preconnect" href="{{ $customHost }}" crossorigin>
+    {{- end -}}
+    <link rel="stylesheet" href="{{ $customURL | safeURL }}">
+  {{- end -}}
+{{- end -}}
+
 {{- /* Head custom content area end */ -}}

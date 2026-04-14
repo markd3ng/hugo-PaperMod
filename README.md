@@ -92,4 +92,8 @@ This section tracks intentional deviations from upstream `adityatelange/hugo-Pap
 - Example site configuration has been consolidated into `exampleSite/config.toml`.
 - Legacy YAML files under `exampleSite/` were removed after migration.
 - Compatibility fixes were applied for modern Hugo behavior and template parameter alignment.
+- Added Vivia-style code typography port with configurable webfont loading (`codeStyleVivia`, `codeFontFamily`, `codeFontSource`).
+- CDN strategy supports `google`, `jsdelivr`, and `custom` providers with graceful local font fallback.
+- To disable Vivia typography and use default PaperMod code appearance, set `codeStyleVivia = false` in site params.
+
 

@@ -1,0 +1,44 @@
+html.code-style-vivia .post-content code,
+html.code-style-vivia .md-content pre code,
+html.code-style-vivia .md-content .highlight pre,
+html.code-style-vivia .md-content .highlight code,
+html.code-style-vivia .code-lang-label {
+    font-family: var(--pm-code-font-family);
+    line-height: var(--pm-code-line-height);
+    letter-spacing: var(--pm-code-letter-spacing);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-variant-ligatures: contextual common-ligatures;
+    font-feature-settings: "liga" 1, "calt" 1;
+}
+
+html.code-style-vivia .md-content pre code,
+html.code-style-vivia .md-content .highlight pre,
+html.code-style-vivia .md-content .highlight code {
+    tab-size: var(--pm-code-tab-size);
+    -moz-tab-size: var(--pm-code-tab-size);
+}
+
+html.code-style-vivia figure.codeblock-vivia {
+    margin-bottom: var(--content-gap);
+}
+
+html.code-style-vivia figure.codeblock-vivia figcaption.code-lang-label {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 6px;
+    padding: 2px 8px;
+    color: var(--secondary);
+    font-family: var(--pm-ui-font-family);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+}
+
+html.code-style-vivia figure.codeblock-vivia .highlight {
+    margin-bottom: 0;
+}
