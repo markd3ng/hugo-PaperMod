@@ -81,3 +81,15 @@ PaperMod consistently scores near-perfect results on [Pagespeed Insights](https:
 ## Stargazers 📈
 
 [![Stargazers over time](https://starchart.cc/adityatelange/hugo-PaperMod.svg?background=%23ffffff00&axis=%23858585&line=%236b63ff)](https://starchart.cc/adityatelange/hugo-PaperMod)
+
+---
+
+## Customizations
+
+This section tracks intentional deviations from upstream `adityatelange/hugo-PaperMod`.
+
+- Initial baseline includes `exampleSite/` synchronization into this single-branch repository.
+- Example site configuration has been consolidated into `exampleSite/config.toml`.
+- Legacy YAML files under `exampleSite/` were removed after migration.
+- Compatibility fixes were applied for modern Hugo behavior and template parameter alignment.
+
