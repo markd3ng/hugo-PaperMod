@@ -6,6 +6,11 @@
     padding: var(--gap);
 }
 
+body.list.home .main {
+    max-width: calc(var(--single-sidebar-layout-width) + var(--gap) * 2);
+}
+
+
 .page-header h1 {
     font-size: 40px;
 }
