@@ -111,7 +111,8 @@ TocSide = "right" # "left" or "right"
 ```
 
 Behavior notes:
-- Desktop: TOC renders in a sticky sidebar (`top: var(--header-height)`).
+- Desktop: the single-page reading area keeps a local 1024px target for `TOC + post content`, so the sidebar no longer inflates the global content width.
+- Desktop: the TOC still sticks in the sidebar, but starts slightly lower and uses a larger sticky offset to align more naturally with the post header area.
 - Small screens (`<1218px`): TOC falls back above the post content to avoid obstructing reading.
 - If `ShowSidebarTOC` is disabled, TOC keeps the original in-flow position.
 
