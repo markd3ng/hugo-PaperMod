@@ -5,9 +5,12 @@
     --main-width: 720px;
     --header-height: 60px;
     --footer-height: 60px;
+    --single-post-width: var(--nav-width);
     --single-sidebar-layout-width: var(--nav-width);
     --single-sidebar-toc-width: 260px;
     --single-sidebar-column-gap: var(--gap);
+    --single-sidebar-rail-width: calc(var(--single-sidebar-toc-width) + var(--single-sidebar-column-gap));
+    --single-sidebar-canvas-width: calc(var(--single-post-width) + (var(--single-sidebar-rail-width) * 2));
     --single-sidebar-offset-top: calc(var(--header-height) + (var(--gap) / 2));
     --single-sidebar-start-offset: var(--gap);
     --single-sidebar-bottom-gap: var(--gap);

@@ -8,11 +8,11 @@
 
 > Based on [hugo-paper](https://github.com/nanxiaobei/hugo-paper/tree/4330c8b12aa48bfdecbcad6ad66145f679a430b3), with additional features and customization options.
 
-| Resource            | Link                                                                                    |
-| ------------------- | --------------------------------------------------------------------------------------- |
-| Live Demo           | [adityatelange.github.io/hugo-PaperMod](https://adityatelange.github.io/hugo-PaperMod/) |
-| Documentation 📚    | [Wiki](https://github.com/adityatelange/hugo-PaperMod/wiki)                             |
-| Example Site Source | [exampleSite branch](https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite)   |
+| Resource         | Link                                                                                    |
+| ---------------- | --------------------------------------------------------------------------------------- |
+| Live Demo        | [adityatelange.github.io/hugo-PaperMod](https://adityatelange.github.io/hugo-PaperMod/) |
+| Documentation 📚 | [Wiki](https://github.com/adityatelange/hugo-PaperMod/wiki)                             |
+| Changelog 🧾     | [CHANGELOG.md](./CHANGELOG.md)                                                          |
 
 <p align="center">
   <kbd><img src="https://user-images.githubusercontent.com/21258296/114303440-bfc0ae80-9aeb-11eb-8cfa-48a4bb385a6d.png" alt="Mockup image" title="Mockup"/></kbd>
@@ -32,6 +32,8 @@
 - **SEO optimized** -- Open Graph, Twitter Cards, and Schema.org structured data out of the box.
 - **Cover images** -- Per-post cover images with responsive image support.
 - **Table of contents** -- Auto-generated from heading structure.
+- **Native TOC sidebar rail** -- Relocate the native TOC to a sticky left/right outer sidebar on single pages (`ShowSidebarTOC`, `TocSide`) while preserving fallback behavior on smaller screens.
+- **Vivia-style code typography** -- Optional Vivia-inspired code rendering with configurable font loading (`codeStyleVivia`, `codeFontFamily`, `codeFontSource`, CDN options).
 - **Multiple authors** -- Native support for multi-author sites.
 - **Social icons and share buttons** -- Configurable social links and per-post sharing.
 - **Breadcrumb navigation**
@@ -88,13 +90,11 @@ PaperMod consistently scores near-perfect results on [Pagespeed Insights](https:
 
 This section tracks intentional deviations from upstream `adityatelange/hugo-PaperMod`.
 
-- Initial baseline includes `exampleSite/` synchronization into this single-branch repository.
-- Example site configuration has been consolidated into `exampleSite/config.toml`.
-- Legacy YAML files under `exampleSite/` were removed after migration.
 - Compatibility fixes were applied for modern Hugo behavior and template parameter alignment.
 - Added Vivia-style code typography port with configurable webfont loading (`codeStyleVivia`, `codeFontFamily`, `codeFontSource`).
 - CDN strategy supports `google`, `jsdelivr`, and `custom` providers with graceful local font fallback.
 - To disable Vivia typography and use default PaperMod code appearance, set `codeStyleVivia = false` in site params.
+- Added native TOC sidebar rail support for single pages via `ShowSidebarTOC` and `TocSide`.
 
 ### Native TOC Sidebar (Minimal Relocation)
 
@@ -111,10 +111,26 @@ TocSide = "right" # "left" or "right"
 ```
 
 Behavior notes:
-- Desktop: the single-page reading area keeps a local 1024px target for `TOC + post content`, so the sidebar no longer inflates the global content width.
-- Desktop: the TOC still sticks in the sidebar, but starts slightly lower and uses a larger sticky offset to align more naturally with the post header area.
-- Small screens (`<1218px`): TOC falls back above the post content to avoid obstructing reading.
+- Desktop: post content stays on a centered 1024px track, while the sticky TOC lives on a separate outer rail and does not consume post width.
+- Desktop: `TocSide = "left"` or `"right"` only changes which outer rail hosts the TOC; the post content remains centered.
+- Desktop: the TOC still starts slightly lower and uses a larger sticky offset to align more naturally with the post header area.
+- Small screens (`<1640px`): the desktop rail is disabled and TOC falls back above the post content to avoid overflow.
 - If `ShowSidebarTOC` is disabled, TOC keeps the original in-flow position.
+
+### Run `exampleSite` locally
+
+From repository root, run:
+
+```powershell
+go run github.com/gohugoio/hugo@v0.146.0 server --source exampleSite --themesDir ../.. --disableFastRender --bind 127.0.0.1 --port 1313
+```
+
+Then open `http://127.0.0.1:1313/` in your browser.
+
+### Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for unreleased and released changes.
+
 
 
 

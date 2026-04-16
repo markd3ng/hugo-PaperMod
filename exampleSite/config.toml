@@ -167,9 +167,9 @@ ShowRssButtonInSectionTermList = true
 ShowAllPagesInArchive = true
 ShowPageNums = true
 ShowToc = true
-# Enable native TOC relocation into a sidebar container on single pages.
+# Enable native TOC on a dedicated outer rail for single pages.
 ShowSidebarTOC = true
-# Sidebar side for native TOC: "left" or "right".
+# Place the outer TOC rail on the "left" or "right" side of the centered post content.
 TocSide = "right"
 # TocOpen (native option) still controls the initial expanded state.
 mainSections = ["posts", "papermod"]

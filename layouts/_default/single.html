@@ -2,7 +2,7 @@
 
 {{- $showSidebarTOC := and (.Param "ShowToc") (.Param "ShowSidebarTOC") }}
 {{- $tocSide := lower ((.Param "TocSide") | default "right") }}
-<div class="post-layout{{ if $showSidebarTOC }} has-sidebar toc-side-{{ if eq $tocSide "left" }}left{{ else }}right{{ end }}{{ end }}">
+<div class="post-layout{{ if $showSidebarTOC }} has-sidebar toc-layout-outside toc-side-{{ if eq $tocSide "left" }}left{{ else }}right{{ end }}{{ end }}">
   {{- if $showSidebarTOC }}
   <aside class="toc-sidebar toc-sidebar-desktop">
     {{- partial "toc.html" . }}

@@ -17,6 +17,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - feat(ui): relocate native TOC to sidebar with minimal logic changes.
 - fix(ui): constrain single-page TOC sidebar layout to a 1024px reading target and lower the default sticky alignment.
 - feat(ui): widen homepage main container to match the 1024px reading layout used by sidebar-TOC single pages.
+- feat(ui): keep single post content on a centered 1024px track and move sidebar TOC to an outer left/right rail.
 
 
 

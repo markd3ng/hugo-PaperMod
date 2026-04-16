@@ -1,31 +1,35 @@
 /* Native TOC sidebar layout (minimal, non-invasive)
    Reuses existing TOC styles from css/common/post-single.css */
 
-.main:has(.post-layout.has-sidebar) {
-    max-width: calc(var(--single-sidebar-layout-width) + var(--gap) * 2);
+.main:has(.post-layout.toc-layout-outside) {
+    max-width: calc(var(--single-sidebar-canvas-width) + var(--gap) * 2);
 }
 
-.post-layout.has-sidebar {
+.post-layout.toc-layout-outside {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) var(--single-sidebar-toc-width);
-    gap: var(--single-sidebar-column-gap);
+    grid-template-columns:
+        var(--single-sidebar-toc-width)
+        var(--single-sidebar-column-gap)
+        minmax(0, var(--single-post-width))
+        var(--single-sidebar-column-gap)
+        var(--single-sidebar-toc-width);
     align-items: start;
+    justify-content: center;
     font-size: 18px;
     line-height: 29px;
 }
 
-.post-layout.has-sidebar.toc-side-left {
-    grid-template-columns: var(--single-sidebar-toc-width) minmax(0, 1fr);
-}
-
-.post-layout.has-sidebar .post-single {
+.post-layout.toc-layout-outside .post-single {
     margin: 0;
     min-width: 0;
+    width: 100%;
+    grid-column: 3;
     grid-row: 1;
 }
 
-.post-layout.has-sidebar .toc-sidebar {
+.post-layout.toc-layout-outside .toc-sidebar {
     grid-row: 1;
+    width: var(--single-sidebar-toc-width);
     min-width: 0;
     margin-top: var(--single-sidebar-start-offset);
     position: sticky;
@@ -34,56 +38,54 @@
     overflow: visible;
 }
 
-.post-layout.has-sidebar .toc-sidebar details.toc {
+.post-layout.toc-layout-outside .toc-sidebar details.toc {
     margin-top: 0;
     margin-bottom: 0;
     max-height: calc(100vh - var(--single-sidebar-offset-top) - var(--single-sidebar-bottom-gap));
     overflow: auto;
 }
 
-.post-layout.has-sidebar .toc-sidebar details.toc::details-content {
+.post-layout.toc-layout-outside .toc-sidebar details.toc::details-content {
     transition: none;
 }
 
-.post-layout.has-sidebar .toc-inline-mobile {
+.post-layout.toc-layout-outside .toc-inline-mobile {
     display: none;
 }
 
-.post-layout.has-sidebar.toc-side-right .post-single {
+.post-layout.toc-layout-outside.toc-side-right .toc-sidebar {
+    grid-column: 5;
+    justify-self: start;
+}
+
+.post-layout.toc-layout-outside.toc-side-left .toc-sidebar {
     grid-column: 1;
+    justify-self: end;
 }
 
-.post-layout.has-sidebar.toc-side-right .toc-sidebar {
-    grid-column: 2;
-}
-
-.post-layout.has-sidebar.toc-side-left .toc-sidebar {
-    grid-column: 1;
-}
-
-.post-layout.has-sidebar.toc-side-left .post-single {
-    grid-column: 2;
-}
-
-@media screen and (max-width: 1218px) {
-    .main:has(.post-layout.has-sidebar) {
-        max-width: calc(var(--main-width) + var(--gap) * 2);
+@media screen and (max-width: 1639px) {
+    .main:has(.post-layout.toc-layout-outside) {
+        max-width: calc(var(--single-post-width) + var(--gap) * 2);
     }
 
-    .post-layout.has-sidebar {
+    .post-layout.toc-layout-outside {
         grid-template-columns: minmax(0, 1fr);
         gap: var(--content-gap);
     }
 
-    .post-layout.has-sidebar .toc-sidebar-desktop {
+    .post-layout.toc-layout-outside .post-single {
+        grid-column: 1;
+    }
+
+    .post-layout.toc-layout-outside .toc-sidebar-desktop {
         display: none;
     }
 
-    .post-layout.has-sidebar .toc-inline-mobile {
+    .post-layout.toc-layout-outside .toc-inline-mobile {
         display: block;
     }
 
-    .post-layout.has-sidebar .toc-inline-mobile details.toc {
+    .post-layout.toc-layout-outside .toc-inline-mobile details.toc {
         margin-bottom: var(--content-gap);
     }
 }
