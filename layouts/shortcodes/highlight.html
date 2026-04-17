@@ -1,0 +1,16 @@
+{{- $lang := .Get 0 | default (.Get "lang") | default "text" -}}
+{{- $opts := "" -}}
+{{- with .Get 1 -}}
+  {{- $opts = . -}}
+{{- end -}}
+{{- with .Get "options" -}}
+  {{- $opts = . -}}
+{{- end -}}
+
+{{- $code := .Inner | strings.TrimSpace -}}
+{{- $rendered := highlight $code $lang $opts -}}
+
+<figure class="codeblock-vivia language-{{ $lang }}">
+  <figcaption class="code-lang-label">{{ $lang }}</figcaption>
+  {{- $rendered | safeHTML -}}
+</figure>
