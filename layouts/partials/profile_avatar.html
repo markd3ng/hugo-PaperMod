@@ -1,0 +1,37 @@
+{{- $imageUrl := .imageUrl | default "" -}}
+{{- if $imageUrl -}}
+{{- $defaultSize := .defaultSize | default 150 -}}
+{{- $width := .imageWidth | default $defaultSize -}}
+{{- $height := .imageHeight | default $defaultSize -}}
+{{- $imageTitle := .imageTitle | default "profile image" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $decoding := .decoding | default "async" -}}
+{{- $class := .class | default "" -}}
+
+{{- $img := "" -}}
+{{- if not (urls.Parse $imageUrl).IsAbs -}}
+{{- $img = resources.Get $imageUrl -}}
+{{- end -}}
+
+{{- if $img -}}
+{{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
+{{- if hugo.IsExtended -}}
+{{- $processableFormats = $processableFormats | append "webp" -}}
+{{- end -}}
+{{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) -}}
+{{- if and (in $processableFormats $img.MediaType.SubType) (eq $prod true) -}}
+{{- if and .imageWidth .imageHeight -}}
+{{- $img = $img.Resize (printf "%dx%d" .imageWidth .imageHeight) -}}
+{{- else if .imageHeight -}}
+{{- $img = $img.Resize (printf "x%d" .imageHeight) -}}
+{{- else if .imageWidth -}}
+{{- $img = $img.Resize (printf "%dx" .imageWidth) -}}
+{{- else -}}
+{{- $img = $img.Resize (printf "%dx%d" $defaultSize $defaultSize) -}}
+{{- end -}}
+{{- end -}}
+<img draggable="false" src="{{ $img.Permalink }}" alt="{{ $imageTitle }}" title="{{ $imageTitle }}" height="{{ $height }}" width="{{ $width }}" loading="{{ $loading }}" decoding="{{ $decoding }}"{{ with $class }} class="{{ . }}"{{ end }} />
+{{- else -}}
+<img draggable="false" src="{{ $imageUrl | absURL }}" alt="{{ $imageTitle }}" title="{{ $imageTitle }}" height="{{ $height }}" width="{{ $width }}" loading="{{ $loading }}" decoding="{{ $decoding }}"{{ with $class }} class="{{ . }}"{{ end }} />
+{{- end -}}
+{{- end -}}

@@ -13,8 +13,10 @@
   {{- end }}
 {{- end }}
 {{/* Use the first one of site images as the fallback. */}}
+{{- $siteImages := site.Params.images -}}
+{{- with site.Params.seo.images }}{{- $siteImages = . -}}{{- end -}}
 {{- if and (not $imgParams) (not $imgs) }}
-  {{- with site.Params.images }}
+  {{- with $siteImages }}
     {{- $imgParams = first 1 . }}
   {{- end }}
 {{- end }}

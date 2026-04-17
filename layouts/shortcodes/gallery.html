@@ -1,0 +1,50 @@
+{{- $pattern := .Get "pattern" | default "*" -}}
+{{- $thumbWidth := int ((.Get "thumbWidth") | default (site.Params.gallery.thumbWidth | default 480)) -}}
+{{- $columns := int ((.Get "columns") | default (site.Params.gallery.columns | default 3)) -}}
+{{- $gap := (.Get "gap") | default (site.Params.gallery.gap | default "0.9rem") -}}
+
+{{- $images := .Page.Resources.Match $pattern -}}
+{{- if not $images -}}
+{{- with .Get "fallback" -}}
+{{- $images = resources.Match . -}}
+{{- end -}}
+{{- end -}}
+
+{{- $lightboxEnabled := site.Params.lightbox.enabled | default false -}}
+
+{{- if $images -}}
+<div class="pm-gallery" style="--pm-gallery-columns: {{ $columns }}; --pm-gallery-gap: {{ $gap }};" data-gallery="pm-gallery">
+  {{- range $images }}
+  {{- if eq .MediaType.MainType "image" }}
+  {{- $img := . -}}
+  {{- $thumb := . -}}
+  {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
+  {{- if hugo.IsExtended -}}
+  {{- $processableFormats = $processableFormats | append "webp" -}}
+  {{- end -}}
+  {{- if and (in $processableFormats .MediaType.SubType) (gt .Width $thumbWidth) -}}
+  {{- $thumb = .Resize (printf "%dx" $thumbWidth) -}}
+  {{- end -}}
+
+  <figure class="pm-gallery-item">
+    <a class="pm-gallery-link"
+      href="{{ $img.RelPermalink }}"
+      data-pswp-width="{{ $img.Width }}"
+      data-pswp-height="{{ $img.Height }}"
+      {{- if not $lightboxEnabled }} target="_blank" rel="noopener noreferrer"{{- end }}>
+      <img class="pm-gallery-image"
+        src="{{ $thumb.RelPermalink }}"
+        alt="{{ $img.Title | default "gallery image" }}"
+        loading="lazy"
+        decoding="async"
+        width="{{ $thumb.Width }}"
+        height="{{ $thumb.Height }}">
+    </a>
+    {{- with $img.Title }}
+    <figcaption class="pm-gallery-caption">{{ . }}</figcaption>
+    {{- end }}
+  </figure>
+  {{- end }}
+  {{- end }}
+</div>
+{{- end -}}

@@ -13,6 +13,7 @@ buildDrafts = false
 buildFuture = false
 buildExpired = false
 mainSections = ["posts", "papermod"]
+hasCJKLanguage = true
 ignoreLogs = ["shortcode-x-getremote"]
 
 [minify]
@@ -174,10 +175,7 @@ TocSide = "right"
 # TocOpen (native option) still controls the initial expanded state.
 mainSections = ["posts", "papermod"]
 author = "Theme PaperMod"
-# Canonical SEO keys expected by templates
-env = "production"
-description = "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
-images = ["images/papermod-cover.png"]
+
 
 # Vivia-style code typography (font stack + optional webfont CDN)
 codeStyleVivia = true
@@ -248,6 +246,11 @@ SiteVerificationTag = ""
 [params.analytics.naver]
 SiteVerificationTag = ""
 
+[params.homePage]
+limit = 6
+moreText = "View More Posts"
+moreLink = "posts/"
+
 [params.homeInfoParams]
 Title = "PaperMod's Demo"
 Content = """
@@ -257,6 +260,23 @@ Content = """
 - Feel free to show your support by giving us a star 🌟 on GitHub and sharing with your friends and social media.
 - PaperMod is based on theme [Paper](https://github.com/nanxiaobei/hugo-paper/tree/4330c8b12aa48bfdecbcad6ad66145f679a430b3).
 """
+imageUrl = "images/papermod-cover.png"
+imageTitle = "PaperMod avatar"
+imageWidth = 112
+imageHeight = 112
+AlignSocialIconsTo = "left"
+
+[params.gallery]
+thumbWidth = 480
+columns = 3
+gap = "0.9rem"
+
+# Optional PhotoSwipe lightbox (Phase 1: gallery shortcode only)
+[params.lightbox]
+enabled = true
+provider = "photoswipe"
+gallerySelector = ".pm-gallery"
+
 
 [params.profileMode]
 enabled = false

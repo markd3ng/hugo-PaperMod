@@ -1,8 +1,11 @@
 {{- $u := urls.Parse .Destination -}}
 {{- $src := $u.String -}}
+{{- $resolved := "" -}}
+
 {{- if not $u.IsAbs -}}
-  {{- $path := strings.TrimPrefix "./" $u.Path }}
+  {{- $path := strings.TrimPrefix "./" $u.Path -}}
   {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+    {{- $resolved = . -}}
     {{- $src = .RelPermalink -}}
     {{- with $u.RawQuery -}}
       {{- $src = printf "%s?%s" $src . -}}
@@ -12,7 +15,13 @@
     {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}
+
+{{- $base := dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy" "decoding" "async" -}}
+{{- with $resolved -}}
+  {{- $base = merge $base (dict "width" (printf "%d" .Width) "height" (printf "%d" .Height)) -}}
+{{- end -}}
+{{- $attributes := merge .Attributes $base -}}
+
 <img
   {{- range $k, $v := $attributes -}}
     {{- if $v -}}

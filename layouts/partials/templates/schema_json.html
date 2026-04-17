@@ -1,3 +1,6 @@
+{{- $seoDescription := site.Params.description -}}
+{{- with site.Params.seo.description }}{{- $seoDescription = . -}}{{- end -}}
+
 {{ if .IsHome }}
 <script type="application/ld+json">
 {
@@ -5,7 +8,7 @@
   "@type": "{{- ( site.Params.schema.publisherType | default "Organization") | title -}}",
   "name": {{ site.Title }},
   "url": {{ site.Home.Permalink }},
-  "description": {{ site.Params.description | plainify | truncate 180 | safeHTML }},
+  "description": {{ $seoDescription | plainify | truncate 180 | safeHTML }},
   {{- if (eq site.Params.schema.publisherType "Person") }}
   "image": {{ site.Params.assets.favicon | default "favicon.ico" | absURL }},
   {{- else }}

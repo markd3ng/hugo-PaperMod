@@ -1,18 +1,54 @@
-<figure{{ if or (.Get "class") (eq (.Get "align") "center") }} class="
-           {{- if eq (.Get "align") "center" }}align-center {{ end }}
+{{/*
+  Figure shortcode policy (fork):
+  - Preserve upstream-compatible output structure.
+  - Auto-fill width/height only when src resolves to local Hugo resources.
+  - Keep external image dimensions user-controlled to avoid wrong metadata.
+*/}}
+{{- $src := .Get "src" -}}
+{{- $link := .Get "link" -}}
+{{- $target := .Get "target" -}}
+{{- $rel := .Get "rel" -}}
+{{- $alignCenter := eq (.Get "align") "center" -}}
+{{- $imgSrc := $src -}}
+{{- if $alignCenter -}}
+{{- $imgSrc = printf "%s#center" $imgSrc -}}
+{{- end -}}
+
+{{- $u := urls.Parse $src -}}
+{{- $resource := "" -}}
+{{- if not $u.IsAbs -}}
+{{- $path := strings.TrimPrefix "./" $u.Path -}}
+{{- with or (.Page.Resources.Get $path) (resources.Get $path) -}}
+{{- $resource = . -}}
+{{- end -}}
+{{- end -}}
+
+{{- $width := .Get "width" -}}
+{{- $height := .Get "height" -}}
+{{- with $resource -}}
+{{- if not $width -}}
+{{- $width = printf "%d" .Width -}}
+{{- end -}}
+{{- if not $height -}}
+{{- $height = printf "%d" .Height -}}
+{{- end -}}
+{{- end -}}
+
+<figure{{ if or (.Get "class") $alignCenter }} class="
+           {{- if $alignCenter }}align-center {{ end }}
            {{- with .Get "class" }}{{ . }}{{- end }}"
 {{- end -}}>
-    {{- if .Get "link" -}}
-        <a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+    {{- if $link -}}
+        <a href="{{ $link }}"{{ with $target }} target="{{ . }}"{{ end }}{{ with $rel }} rel="{{ . }}"{{ end }}>
     {{- end }}
-    <img loading="lazy" src="{{ .Get "src" }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
+    <img loading="lazy" decoding="async" src="{{ $imgSrc }}"
          {{- if or (.Get "alt") (.Get "caption") }}
          alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
          {{- end -}}
-         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
-         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
-    /> <!-- Closing img tag -->
-    {{- if .Get "link" }}</a>{{ end -}}
+         {{- with $width }} width="{{ . }}"{{ end -}}
+         {{- with $height }} height="{{ . }}"{{ end -}}
+    />
+    {{- if $link }}</a>{{ end -}}
     {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
         <figcaption>
             {{ with (.Get "title") -}}

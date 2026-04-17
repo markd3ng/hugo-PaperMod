@@ -96,17 +96,16 @@ ex: [archives.md](https://raw.githubusercontent.com/adityatelange/hugo-PaperMod/
 
 ---
 
-### Regular Mode (default-mode)
+### Theme Preview Gallery (PhotoSwipe)
 
-![regular](images/regular.jpg)
+{{< gallery pattern="images/*.jpg" columns="3" thumbWidth="640" >}}
 
 ---
 
 ### Home-Info Mode
 
-![homeinfo](images/homeinfo.jpg)
-
 Use 1st entry as some Information
+
 
 add following to config file
 
@@ -127,9 +126,8 @@ params:
 
 ### Profile Mode
 
-![profile](https://raw.githubusercontent.com/adityatelange/hugo-PaperMod/exampleSite/content/posts/papermod/papermod-features/images/profile.jpg)
-
 Shows Index/Home page as Full Page with Social Links and Image
+
 
 add following to config file
 

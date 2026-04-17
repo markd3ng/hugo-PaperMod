@@ -1,4 +1,6 @@
 <meta property="og:url" content="{{ .Permalink }}">
+{{- $seoDescription := site.Params.description -}}
+{{- with site.Params.seo.description }}{{- $seoDescription = . -}}{{- end -}}
 
 {{- with or site.Title site.Params.title | plainify }}
   <meta property="og:site_name" content="{{ . }}">
@@ -8,7 +10,7 @@
   <meta property="og:title" content="{{ . }}">
 {{- end }}
 
-{{- with or .Description .Summary site.Params.description | plainify | htmlUnescape }}
+{{- with or .Description .Summary $seoDescription | plainify | htmlUnescape }}
   <meta property="og:description" content="{{ trim . "\n\r\t " }}">
 {{- end }}
 

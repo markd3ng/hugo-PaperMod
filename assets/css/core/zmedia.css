@@ -14,6 +14,25 @@
         min-height: 260px;
     }
 
+    .post-entry.has-cover {
+        display: block;
+    }
+
+    .post-entry.has-cover .entry-cover {
+        margin-bottom: var(--gap);
+    }
+
+    .home-info .home-info-inner,
+    .home-info .home-info-inner.has-avatar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--gap);
+    }
+
+    .home-info .home-info-avatar {
+        order: -1;
+    }
+
     /* archive */
     .archive-month {
         flex-direction: column;

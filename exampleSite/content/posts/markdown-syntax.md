@@ -11,6 +11,7 @@ cover:
   image: images/msg.png
   caption: "Generated using [OG Image Playground by Vercel](https://og-playground.vercel.app/)"
 ShowToc: true
+ShowSidebarTOC: true
 TocOpen: true
 weight: 1
 ---

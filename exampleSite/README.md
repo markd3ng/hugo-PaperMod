@@ -10,8 +10,7 @@ Read Wiki => [hugo-PaperMod - Installation](https://github.com/adityatelange/hug
 
 ```
 .(site root)
-├── configTaxo.yml
-├── hugo.yaml
+├── config.toml
 ├── content
 │   ├── archives.fr.md
 │   ├── archives.md
@@ -20,38 +19,24 @@ Read Wiki => [hugo-PaperMod - Installation](https://github.com/adityatelange/hug
 │   │   ├── markdown-syntax.fa.md
 │   │   ├── markdown-syntax.fr.md
 │   │   ├── markdown-syntax.md
-│   │   ├── math-typesetting.md
-│   │   ├── papermod
-│   │   │   ├── _index.md
-│   │   │   ├── papermod-faq.md
-│   │   │   ├── papermod-features
-│   │   │   │   ├── images
-│   │   │   │   │   ├── homeinfo.jpg
-│   │   │   │   │   ├── profile.jpg
-│   │   │   │   │   └── regular.jpg
-│   │   │   │   └── index.md
-│   │   │   ├── papermod-icons.md
-│   │   │   ├── papermod-installation.md
-│   │   │   └── papermod-variables.md
-│   │   ├── placeholder-text.md
-│   │   └── rich-content.md
+│   │   └── ...
 │   ├── search.fr.md
 │   ├── search.md
 │   └── tags
-├── LICENSE
-├── README.md
-├── resources
-│   └── _gen
-│       ├── assets
-│       └── images
 ├── static
-│   ├── android-chrome-192x192.png
-│   ├── android-chrome-512x512.png
-│   ├── apple-touch-icon.png
+│   ├── favicon.ico
 │   ├── favicon-16x16.png
 │   ├── favicon-32x32.png
-│   ├── favicon.ico
 │   └── papermod-cover.png
+├── resources
+│   └── _gen
 └── themes
     └── hugo-PaperMod
 ```
+
+## Lightbox Demo
+
+- PhotoSwipe demo content is available at `content/posts/papermod/papermod-features/index.md` via built-in `gallery` shortcode.
+- Example config enables it in `config.toml` under `[params.lightbox]`.
+- Fork default loads PhotoSwipe assets from local theme static files (`/vendor/photoswipe/*`).
+

@@ -95,6 +95,85 @@ This section tracks intentional deviations from upstream `adityatelange/hugo-Pap
 - CDN strategy supports `google`, `jsdelivr`, and `custom` providers with graceful local font fallback.
 - To disable Vivia typography and use default PaperMod code appearance, set `codeStyleVivia = false` in site params.
 - Added native TOC sidebar rail support for single pages via `ShowSidebarTOC` and `TocSide`.
+- Added homepage stream controls via `params.homePage` (`limit`, `moreText`, `moreLink`) without introducing `layouts/index.html`.
+- Added reusable post card partial `layouts/partials/post_entry.html` to keep home/list rendering semantics aligned.
+- Enhanced `homeInfoParams` with optional avatar support (`imageUrl`, `imageTitle`, `imageWidth`, `imageHeight`, `AlignSocialIconsTo`).
+- Reduced image-related CLS across `cover`, Markdown image render hook, and `figure` shortcode by emitting stable dimensions whenever possible.
+- `figure` shortcode policy: only infer `width`/`height` when the image resolves to local Hugo resources; external URLs keep explicit user-provided dimensions.
+- Added built-in `gallery` shortcode with responsive CSS in `assets/css/extended/gallery.css`.
+
+### Homepage Stream + Home-Info Avatar
+
+Example params:
+
+```toml
+hasCJKLanguage = true
+
+[params.homePage]
+limit = 6
+moreText = "View More Posts"
+moreLink = "posts/"
+
+[params.homeInfoParams]
+Title = "PaperMod's Demo"
+Content = "Welcome!"
+imageUrl = "images/papermod-cover.png"
+imageTitle = "PaperMod avatar"
+imageWidth = 112
+imageHeight = 112
+AlignSocialIconsTo = "left"
+```
+
+Behavior notes:
+- Home page shows only `params.homePage.limit` posts and renders a “view more” link.
+- Section, taxonomy, and term list pages continue to use normal pagination.
+- `hasCJKLanguage = true` delegates CJK word counting to Hugo core.
+
+### Built-in Gallery Shortcode
+
+Use page resources with a lightweight grid output:
+
+```md
+{{< gallery pattern="*" columns="3" thumbWidth="480" >}}
+```
+
+Optional global defaults:
+
+```toml
+[params.gallery]
+thumbWidth = 480
+columns = 3
+gap = "0.9rem"
+```
+
+### Optional PhotoSwipe Lightbox (Gallery, Phase 1)
+
+Enable PhotoSwipe only for built-in `gallery` shortcode output (`.pm-gallery`) via theme extension injection points.
+
+```toml
+[params.lightbox]
+enabled = false
+provider = "photoswipe"
+gallerySelector = ".pm-gallery"
+
+# Optional overrides (fork default uses local static vendor assets)
+# cssURL = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css"
+# moduleURL = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe-lightbox.esm.min.js"
+# pswpModuleURL = "https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.esm.min.js"
+```
+
+Behavior notes:
+- When `enabled = true`, theme injects PhotoSwipe assets through `extend_head` / `extend_footer` and initializes per gallery container.
+- This fork defaults to local assets under `static/vendor/photoswipe/*` to avoid CDN/network failures in local preview.
+- You can still override `cssURL` / `moduleURL` / `pswpModuleURL` in config to use external CDN.
+- Multi-instance safe: one page can contain multiple `.pm-gallery` blocks without selector collision.
+- Progressive enhancement: original `<a href="...">` links remain valid fallback when JavaScript is disabled or fails.
+- Phase boundary: Markdown `render-image` integration is intentionally out of scope for Phase 1 and will be assessed separately.
+- Phase 2 assessment (render-image):
+  - Scope: extend the Markdown image render hook to emit PhotoSwipe-compatible anchor/metadata for non-gallery images.
+  - Compatibility risk: medium, because existing render hook currently guarantees width/height and lazy loading for general Markdown images; introducing lightbox wrappers can affect author expectations, external image behavior, and caption/title semantics.
+  - Recommended rollout: opt-in by separate switch (e.g. `params.lightbox.enableRenderImage = false`), validate against local resources and remote URLs, then enable gradually.
+
 
 ### Native TOC Sidebar (Minimal Relocation)
 
@@ -114,8 +193,10 @@ Behavior notes:
 - Desktop: post content stays on a centered 1024px track, while the sticky TOC lives on a separate outer rail and does not consume post width.
 - Desktop: `TocSide = "left"` or `"right"` only changes which outer rail hosts the TOC; the post content remains centered.
 - Desktop: the TOC still starts slightly lower and uses a larger sticky offset to align more naturally with the post header area.
-- Small screens (`<1640px`): the desktop rail is disabled and TOC falls back above the post content to avoid overflow.
+- Small screens (`<=1280px`): the desktop rail is disabled and TOC falls back above the post content to avoid overflow.
 - If `ShowSidebarTOC` is disabled, TOC keeps the original in-flow position.
+- Compatibility fallback: if a browser does not support `:has()`, desktop sidebar rail auto-degrades to the inline TOC flow.
+- Compatibility fallback: if `::details-content` is unsupported, TOC remains usable without the open/close animation.
 
 ### Run `exampleSite` locally
 

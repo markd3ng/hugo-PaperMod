@@ -1,14 +1,33 @@
 {{- with site.Params.homeInfoParams }}
 <article class="first-entry home-info">
-    <header class="entry-header">
-        <h1>{{ .Title | markdownify }}</h1>
-    </header>
-    <div class="entry-content md-content">
-        {{ $opts := dict "display" "block" }}
-        {{ .Content | $.Page.RenderString $opts }}
+    <div class="home-info-inner{{ if .imageUrl }} has-avatar{{ end }}">
+        {{- if .imageUrl }}
+        <div class="home-info-avatar">
+            {{- partial "profile_avatar.html" (dict
+                "imageUrl" .imageUrl
+                "imageTitle" (.imageTitle | default "home avatar")
+                "imageWidth" .imageWidth
+                "imageHeight" .imageHeight
+                "defaultSize" 120
+                "loading" "eager"
+                "decoding" "async"
+                "class" "home-avatar-image"
+            ) }}
+        </div>
+        {{- end }}
+
+        <div class="home-info-main">
+            <header class="entry-header">
+                <h1>{{ .Title | markdownify }}</h1>
+            </header>
+            <div class="entry-content md-content">
+                {{ $opts := dict "display" "block" }}
+                {{ .Content | $.Page.RenderString $opts }}
+            </div>
+            <footer class="entry-footer">
+                {{ partial "social_icons.html" (dict "align" .AlignSocialIconsTo) }}
+            </footer>
+        </div>
     </div>
-    <footer class="entry-footer">
-        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
-    </footer>
 </article>
 {{- end -}}

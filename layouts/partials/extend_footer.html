@@ -1,3 +1,32 @@
 {{- /* Footer custom content area start */ -}}
 {{- /*     Insert any custom code web-analytics, resources, etc. here */ -}}
+
+{{- $lightboxEnabled := site.Params.lightbox.enabled | default false -}}
+{{- $lightboxProvider := lower (site.Params.lightbox.provider | default "photoswipe") -}}
+{{- if and $lightboxEnabled (eq $lightboxProvider "photoswipe") -}}
+  {{- $gallerySelector := site.Params.lightbox.gallerySelector | default ".pm-gallery" -}}
+  {{- $childSelector := site.Params.lightbox.childSelector | default "a" -}}
+  {{- $lightboxModuleURL := site.Params.lightbox.moduleURL | default "/vendor/photoswipe/photoswipe-lightbox.esm.min.js" -}}
+  {{- $pswpModuleURL := site.Params.lightbox.pswpModuleURL | default "/vendor/photoswipe/photoswipe.esm.min.js" -}}
+  <script type="module">
+    const gallerySelector = {{ $gallerySelector }};
+    const childSelector = {{ $childSelector }};
+    const lightboxModuleURL = {{ $lightboxModuleURL }};
+    const pswpModuleURL = {{ $pswpModuleURL }};
+
+    import(lightboxModuleURL)
+      .then(({ default: PhotoSwipeLightbox }) => {
+        const lightbox = new PhotoSwipeLightbox({
+          gallery: gallerySelector,
+          children: childSelector,
+          pswpModule: () => import(pswpModuleURL)
+        });
+        lightbox.init();
+      })
+      .catch(() => {
+        // Progressive enhancement fallback: keep native anchor behavior.
+      });
+  </script>
+{{- end -}}
+
 {{- /* Footer custom content area end */ -}}

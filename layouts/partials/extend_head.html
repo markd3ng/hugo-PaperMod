@@ -48,4 +48,13 @@
   {{- end -}}
 {{- end -}}
 
+{{- $lightboxEnabled := site.Params.lightbox.enabled | default false -}}
+{{- $lightboxProvider := lower (site.Params.lightbox.provider | default "photoswipe") -}}
+{{- if and $lightboxEnabled (eq $lightboxProvider "photoswipe") -}}
+  {{- $lightboxCSS := site.Params.lightbox.cssURL | default "/vendor/photoswipe/photoswipe.css" -}}
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href={{ $lightboxCSS }}>
+{{- end -}}
+
 {{- /* Head custom content area end */ -}}
