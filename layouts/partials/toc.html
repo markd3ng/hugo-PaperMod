@@ -1,4 +1,4 @@
-{{- $headers := findRE "<h[1-6].*?>(.|\n])+?</h[1-6]>" .Content -}}
+{{- $headers := findRE "<h[1-6].*?>(.|\n)+?</h[1-6]>" .Content -}}
 {{- $has_headers := ge (len $headers) 1 -}}
 {{- if $has_headers -}}
 <details class="toc" {{if (.Param "TocOpen") }} open{{ end }}>
@@ -36,7 +36,7 @@
 
                 {{- /* strip id="" to leave xyz, no way to get regex capturing groups in hugo */ -}}
                 {{- $cleanedID := replace (replace $id "id=\"" "") "\"" "" }}
-                {{- $header := replaceRE "<h[1-6].*?>((.|\n])+?)</h[1-6]>" "$1" $header -}}
+                {{- $header := replaceRE "<h[1-6].*?>((.|\n)+?)</h[1-6]>" "$1" $header -}}
 
                 {{- if ne $i 0 -}}
                 {{- $prevHeaderLevel := index (findRE "[1-6]" (index $headers (sub $i 1)) 1) 0 -}}
@@ -70,10 +70,10 @@
             {{- end -}}
             {{- end }}
             <li>
-                <a href="#{{- $cleanedID -}}" aria-label="{{- $header | plainify | safeHTML -}}">{{- $header | plainify | safeHTML -}}</a>
+                <a href="#{{- $cleanedID -}}" aria-label="{{- $header | plainify -}}">{{- $header | plainify -}}</a>
                 {{- else }}
             <li>
-                <a href="#{{- $cleanedID -}}" aria-label="{{- $header | plainify | safeHTML -}}">{{- $header | plainify | safeHTML -}}</a>
+                <a href="#{{- $cleanedID -}}" aria-label="{{- $header | plainify -}}">{{- $header | plainify -}}</a>
                 {{- end -}}
                 {{- end -}}
                 <!-- {{- $firstHeaderLevel := len (seq (index (findRE "[1-6]" (index $headers 0) 1) 0)) -}} -->

@@ -165,7 +165,7 @@ gallerySelector = ".pm-gallery"
 Behavior notes:
 - When `enabled = true`, theme injects PhotoSwipe assets through `extend_head` / `extend_footer` and initializes per gallery container.
 - This fork defaults to local assets under `static/vendor/photoswipe/*` to avoid CDN/network failures in local preview.
-- You can still override `cssURL` / `moduleURL` / `pswpModuleURL` in config to use external CDN.
+- You can still override `cssURL` / `moduleURL` / `pswpModuleURL` in config to use external CDN. Treat these URLs as trusted configuration because external modules execute in the browser.
 - Multi-instance safe: one page can contain multiple `.pm-gallery` blocks without selector collision.
 - Progressive enhancement: original `<a href="...">` links remain valid fallback when JavaScript is disabled or fails.
 - Phase boundary: Markdown `render-image` integration is intentionally out of scope for Phase 1 and will be assessed separately.
@@ -173,6 +173,10 @@ Behavior notes:
   - Scope: extend the Markdown image render hook to emit PhotoSwipe-compatible anchor/metadata for non-gallery images.
   - Compatibility risk: medium, because existing render hook currently guarantees width/height and lazy loading for general Markdown images; introducing lightbox wrappers can affect author expectations, external image behavior, and caption/title semantics.
   - Recommended rollout: opt-in by separate switch (e.g. `params.lightbox.enableRenderImage = false`), validate against local resources and remote URLs, then enable gradually.
+
+### Content Security Note
+
+The example site enables Goldmark unsafe rendering and includes a `rawhtml` shortcode for trusted author workflows. Do not enable raw HTML for multi-author or user-submitted content unless submissions are reviewed and sanitized before publishing.
 
 
 ### Native TOC Sidebar (Minimal Relocation)

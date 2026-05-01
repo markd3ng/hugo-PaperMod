@@ -48,7 +48,7 @@ window.onload = function () {
             }
         }
     };
-    xhr.open('GET', "../index.json");
+    xhr.open('GET', params.searchIndexURL || "../index.json");
     xhr.send();
 }
 
@@ -60,8 +60,10 @@ function activeToggle(ae) {
     if (ae) {
         ae.focus()
         document.activeElement = current_elem = ae;
-        ae.parentElement.classList.add("focus")
-    } else {
+        if (ae.parentElement) {
+            ae.parentElement.classList.add("focus")
+        }
+    } else if (document.activeElement && document.activeElement.parentElement) {
         document.activeElement.parentElement.classList.add("focus")
     }
 }
@@ -131,22 +133,24 @@ document.onkeydown = function (e) {
         if (ae == sInput) {
             // if the currently focused element is the search input, focus the <a> of first <li>
             activeToggle(resList.firstChild.lastChild);
-        } else if (ae.parentElement != last) {
+        } else if (ae && ae.parentElement && ae.parentElement != last && ae.parentElement.nextSibling) {
             // if the currently focused element's parent is last, do nothing
             // otherwise select the next search result
             activeToggle(ae.parentElement.nextSibling.lastChild);
         }
     } else if (key === "ArrowUp") {
         e.preventDefault();
-        if (ae.parentElement == first) {
+        if (ae && ae.parentElement == first) {
             // if the currently focused element is first item, go to input box
             activeToggle(sInput);
-        } else if (ae != sInput) {
+        } else if (ae != sInput && ae && ae.parentElement && ae.parentElement.previousSibling) {
             // if the currently focused element is input box, do nothing
             // otherwise select the previous search result
             activeToggle(ae.parentElement.previousSibling.lastChild);
         }
     } else if (key === "ArrowRight") {
-        ae.click(); // click on active link
+        if (ae) {
+            ae.click(); // click on active link
+        }
     }
 }
